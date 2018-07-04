@@ -43,40 +43,40 @@ while True:
 
 	# loop over the detected barcode
 	if not detect:
-                for barcode in barcodes:
-                        # extract the bounding box location of the barcode and draw
-                        # the bounding box surrounding the barcode on the image
-                        (x, y, w, h) = barcode.rect
-                        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 2)
+	    for barcode in barcodes:
+	        # extract the bounding box location of the barcode and draw
+	        # the bounding box surrounding the barcode on the image
+	        (x, y, w, h) = barcode.rect
+	        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 2)
 
-                        # the barcode data is a bytes object so if we want to draw it
-                        # on our output image we need to convert it to a string first
-                        barcodeData = barcode.data.decode("utf-8").encode('ascii','ignore')
-                        barcodeType = barcode.type
-                        print(barcodeData, barcodeType)
-                        pygame.mixer.music.play(0)
-                        detect = True
-                        detect_time = time.time()
+	        # the barcode data is a bytes object so if we want to draw it
+	        # on our output image we need to convert it to a string first
+	        barcodeData = barcode.data.decode("utf-8").encode('ascii','ignore')
+	        barcodeType = barcode.type
+	        print(barcodeData, barcodeType)
+	        pygame.mixer.music.play(0)
+	        detect = True
+	        detect_time = time.time()
 
-                        # draw the barcode data and barcode type on the image
-                        text = "{}".format(barcodeData)
-                        cv2.putText(frame, text, (x, y - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.25, (255, 0, 255), 1)
+	        # draw the barcode data and barcode type on the image
+	        text = "{}".format(barcodeData)
+	        cv2.putText(frame, text, (x, y - 10),
+	                cv2.FONT_HERSHEY_SIMPLEX, 0.25, (255, 0, 255), 1)
 
-                        # if the barcode text is currently not in our CSV file, write
-                        # the timestamp + barcode to disk and update the set
-                        if barcodeData not in found:
-                                csv.write("{},{}\n".format(datetime.datetime.now(), barcodeData))
-                                csv.flush()
-                                found.add(barcodeData)
+	        # if the barcode text is currently not in our CSV file, write
+	        # the timestamp + barcode to disk and update the set
+	        if barcodeData not in found:
+	            csv.write("{},{}\n".format(datetime.datetime.now(), barcodeData))
+	            csv.flush()
+	            found.add(barcodeData)
         else:
-                if time.time()-detect_time > 10.:
-                        detect = False
+            if time.time()-detect_time > 10.:
+            	detect = False
 
 	# show the output frame
 	cv2.imshow("Barcode Scanner", frame)
 	key = cv2.waitKey(1) & 0xFF
- 
+
 	# if the `q` key was pressed, break from the loop
 	if key == ord("q"):
 		break
