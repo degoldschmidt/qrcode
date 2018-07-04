@@ -69,9 +69,9 @@ while True:
 	            csv.write("{},{}\n".format(datetime.datetime.now(), barcodeData))
 	            csv.flush()
 	            found.add(barcodeData)
-        else:
-            if time.time()-detect_time > 10.:
-            	detect = False
+	else:
+        	if time.time()-detect_time > 10.:
+            		detect = False
 
 	# show the output frame
 	cv2.imshow("Barcode Scanner", frame)
