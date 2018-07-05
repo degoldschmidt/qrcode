@@ -29,7 +29,7 @@ setup(
         "Programming Language :: Python :: 3.6",
     ],
     platforms=['Windows10Pro', 'MacOSX-HighSierra'],
-    setup_requires=[],
+    setup_requires=['opencv-python', 'imutils', 'pyzbar', 'pygame'],
     entry_points={
         'console_scripts': [
             'qread = qread.main:main',
